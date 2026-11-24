@@ -1,0 +1,10 @@
+{
+  "kind": "skills",
+  "name": "brainstorm-and-plan",
+  "description": "Your assistant asks one sharp question at a time, plays the design back, lays out two or three approaches, and gets a design doc approved before anything is built. Then it writes a test-first implementation plan with exact files, signatures and checks.",
+  "tags": ["brainstorming", "design", "planning", "implementation-plan", "test-first"],
+  "license": "MIT",
+  "runsWith": ["claude", "copilot", "codex", "gemini", "cursor"],
+  "for": ["dev"],
+  "category": "tasks"
+}

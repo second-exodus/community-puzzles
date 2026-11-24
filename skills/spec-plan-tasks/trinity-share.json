@@ -1,0 +1,10 @@
+{
+  "kind": "skills",
+  "name": "spec-plan-tasks",
+  "description": "A three-stage workflow with gates: write a technology-free spec with user stories and measurable success criteria, a plan with research decisions, data model and contracts, then a task list by user story in a strict, checkable format.",
+  "tags": ["spec", "planning", "tasks", "requirements", "workflow"],
+  "license": "MIT",
+  "runsWith": ["claude", "copilot", "codex", "gemini", "cursor"],
+  "for": ["dev"],
+  "category": "tasks"
+}

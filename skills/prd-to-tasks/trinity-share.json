@@ -1,0 +1,11 @@
+{
+  "kind": "skills",
+  "name": "prd-to-tasks",
+  "description": "Turn a feature idea into a short PRD after a few multiple-choice questions, then into a checklist of parent tasks and sub-tasks, then build it one sub-task at a time with your review after each step. Simple enough for a first real feature.",
+  "tags": ["prd", "requirements", "task-list", "planning", "workflow"],
+  "license": "Apache-2.0",
+  "runsWith": ["claude", "copilot", "codex", "gemini", "cursor"],
+  "for": ["dev", "beginner"],
+  "category": "tasks",
+  "example": "example/output.md"
+}
