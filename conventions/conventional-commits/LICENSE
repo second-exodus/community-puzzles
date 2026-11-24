@@ -1,0 +1,12 @@
+This convention is licensed under the Creative Commons Attribution 3.0 Unported License (CC BY 3.0).
+Full licence: https://creativecommons.org/licenses/by/3.0/legalcode
+
+It is adapted from the Conventional Commits 1.0.0 specification by the Conventional Commits project
+(https://www.conventionalcommits.org/en/v1.0.0/), licensed under CC BY 3.0
+(https://creativecommons.org/licenses/by/3.0/). Changes are listed in SOURCE.md. The Conventional Commits project
+does not endorse this adaptation.
+
+Some wording comes from the rules "git-conventional-commit-messages" and "gitflow" of
+PatrickJS/awesome-cursorrules, dedicated to the public domain under CC0 1.0 (text in LICENSE-CC0).
+
+The work is provided as is, without warranties of any kind (see section 5 of the licence).

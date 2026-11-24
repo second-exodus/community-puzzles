@@ -1,0 +1,10 @@
+{
+  "kind": "conventions",
+  "name": "conventional-commits",
+  "description": "Commit messages in the Conventional Commits 1.0.0 format: type, scope, description, body and footers, breaking changes marked with ! or a footer. Gives readable history, automatic SemVer bumps and changelogs. With examples of right and wrong.",
+  "tags": ["git", "commits", "conventional-commits", "semver", "changelog"],
+  "license": "CC-BY-3.0",
+  "runsWith": ["claude", "copilot", "codex", "gemini", "cursor"],
+  "for": ["dev"],
+  "category": "release/versions"
+}

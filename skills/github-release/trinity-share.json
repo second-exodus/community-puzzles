@@ -1,0 +1,11 @@
+{
+  "kind": "skills",
+  "name": "github-release",
+  "description": "Cut a library release on GitHub: reads the code diff since the last tag, proposes the next SemVer version with evidence, writes a Keep a Changelog entry after your OK, and opens a release pull request with gh and git. You tag the merge commit.",
+  "tags": ["release", "semver", "changelog", "git", "gh-cli"],
+  "license": "MIT",
+  "runsWith": ["claude", "copilot", "codex", "gemini", "cursor"],
+  "for": ["devops"],
+  "category": "release/versions",
+  "example": "example/output.md"
+}

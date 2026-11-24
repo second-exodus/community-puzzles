@@ -1,0 +1,10 @@
+{
+  "kind": "skills",
+  "name": "changelog-automation",
+  "description": "Turn commits into a Keep a Changelog file and release notes automatically: enforce Conventional Commits, pick and configure git-cliff, commitizen, semantic-release or commit-and-tag-version, add a CI release job, and write the human summary on top.",
+  "tags": ["changelog", "release-notes", "conventional-commits", "semver", "ci"],
+  "license": "MIT",
+  "runsWith": ["claude", "copilot", "codex", "gemini", "cursor"],
+  "for": ["devops", "docs"],
+  "category": "release/notes"
+}
