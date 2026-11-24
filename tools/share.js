@@ -5,6 +5,8 @@
 //   node tools/share.js login        sign in as a device: shows a code, you confirm it in the browser
 //   node tools/share.js link         links github.com/<owner> to your account (writes .trinity-community to commit)
 //   node tools/share.js share [tag]  shares every puzzle of tools/covers/covers.json at the tag (default v1);
+//                                    {name} in the tag is the puzzle's name, for a version per puzzle: share '{name}-v2'
+//                                    shares each puzzle at its own tag <name>-v2 (only the puzzles that have that tag)
 //                                    waits when the community says "too often" and goes on (20 an hour, 100 a day)
 //   node tools/share.js status       who is signed in, which namespaces are linked
 //
@@ -98,8 +100,10 @@ async function share(tag) {
   const list = JSON.parse(fs.readFileSync(path.join(__dirname, 'covers', 'covers.json'), 'utf8'));
   let done = 0;
   for (const p of list) {
+    const at = tag.split('{name}').join(p.path.split('/').pop());
+    if (at !== tag) { try { execFileSync('git', ['-C', repoDir, 'rev-parse', '--verify', '--quiet', 'refs/tags/' + at], { stdio: 'ignore' }); } catch { console.log(`skipped  ${p.path}: no tag ${at}`); continue; } }
     for (;;) {
-      const r = await call('POST', '/shares', { url, path: p.path, tag });
+      const r = await call('POST', '/shares', { url, path: p.path, tag: at });
       if (r.status === 201 || r.status === 200) { done++; console.log(`${r.status === 201 ? 'shared ' : 'known  '} ${p.path} -> ${site}/@${r.body.by}/${url.split('/').pop()}/${r.body.name}`); break; }
       if (r.status === 429) {
         const min = (r.body && r.body.minutes) || 10;
@@ -112,7 +116,7 @@ async function share(tag) {
       break;
     }
   }
-  console.log(`${done}/${list.length} shared at ${tag}.`);
+  console.log(`${done}/${list.length} shared at ${tag.replace('{name}', '<name>')}.`);
 }
 
 const [cmd, arg] = process.argv.slice(2);

@@ -35,4 +35,5 @@ the Trinity Community lists a folder at a git tag. Read this before you add or c
   checkout next to this repo (`COVER_FONTS` points elsewhere).
 - **Commits:** one line in English, then text if needed. One topic per commit.
 - **Versions:** the community lists a folder at a tag. The first release of all puzzles is the tag `v1`; a later
-  version of one puzzle gets its own tag (`<name>-v2`, …). Tags are never moved or deleted.
+  version of one puzzle gets its own tag (`<name>-v2`, …). Tags are never moved or deleted. To share such versions:
+  `node tools/share.js share '{name}-v2'` (each puzzle at its own tag; puzzles without that tag are skipped).
