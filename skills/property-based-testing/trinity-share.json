@@ -1,0 +1,10 @@
+{
+  "kind": "skills",
+  "name": "property-based-testing",
+  "description": "Write, review and triage property-based tests in any language: pick the strongest property (roundtrip, oracle, invariant), build generators that don't discard inputs, catch tautological or vacuous tests, and classify a shrunk failure as wrong property, unclear spec or real bug.",
+  "tags": ["property-based-testing", "hypothesis", "fast-check", "generative-testing", "invariants"],
+  "license": "CC-BY-SA-4.0",
+  "runsWith": ["claude", "copilot", "codex", "gemini", "cursor"],
+  "for": ["test", "dev"],
+  "category": "tests/unit"
+}

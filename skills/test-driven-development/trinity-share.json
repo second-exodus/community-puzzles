@@ -1,0 +1,10 @@
+{
+  "kind": "skills",
+  "name": "test-driven-development",
+  "description": "Strict red-green-refactor for every feature and bug fix: one failing test first, watched failing for the right reason, minimal code, full suite green. Includes rules that keep tests honest: name the break, hand-derived expectations, no assertions on mocks, a mutation check.",
+  "tags": ["tdd", "unit-testing", "red-green-refactor", "test-first", "mocking"],
+  "license": "MIT",
+  "runsWith": ["claude", "copilot", "codex", "gemini", "cursor"],
+  "for": ["test", "dev"],
+  "category": "tests/unit"
+}

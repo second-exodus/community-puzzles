@@ -1,0 +1,10 @@
+{
+  "kind": "skills",
+  "name": "webapp-testing",
+  "description": "Test and debug a local web app with short Python Playwright scripts: a helper starts and stops the dev servers, you discover selectors from the rendered page, act, assert, and capture screenshots plus browser console errors as evidence.",
+  "tags": ["playwright", "e2e", "browser-testing", "ui-testing", "python"],
+  "license": "Apache-2.0",
+  "runsWith": ["claude", "copilot", "codex", "gemini", "cursor"],
+  "for": ["test", "dev"],
+  "category": "tests/e2e"
+}

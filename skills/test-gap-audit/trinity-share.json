@@ -1,0 +1,11 @@
+{
+  "kind": "skills",
+  "name": "test-gap-audit",
+  "description": "A read-only audit of what your tests do not prove: for the whole repo or one PR, feature, route or bug fix it maps code against tests, ranks missing, weak and stale coverage P0-P3 with file:line evidence, and suggests the exact tests to add first. Ships a stdlib Python source-to-test matcher.",
+  "tags": ["test-coverage", "audit", "regression-tests", "code-review", "test-planning"],
+  "license": "MIT",
+  "runsWith": ["claude", "copilot", "codex", "gemini", "cursor"],
+  "for": ["test", "dev"],
+  "category": "tests",
+  "example": "example/output.md"
+}

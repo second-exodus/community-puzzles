@@ -1,0 +1,10 @@
+{
+  "kind": "skills",
+  "name": "systematic-debugging",
+  "description": "Root cause before fix: a four-phase debugging process (investigate, compare with working code, test one hypothesis, fix with a failing test) with backward call-chain tracing, test-polluter bisection, defence in depth and condition-based waiting for flaky tests. Stops after three failed fixes.",
+  "tags": ["debugging", "root-cause", "flaky-tests", "bug-fixing", "troubleshooting"],
+  "license": "MIT",
+  "runsWith": ["claude", "copilot", "codex", "gemini", "cursor"],
+  "for": ["dev", "test"],
+  "category": "tests"
+}
