@@ -1,0 +1,10 @@
+{
+  "kind": "rules",
+  "name": "memory-bank",
+  "description": "Your assistant keeps a memory-bank folder of six Markdown files (brief, product, patterns, tech, current focus, progress), reads all of them at the start of every task and updates them at the end, so a new session picks up exactly where the last one stopped.",
+  "tags": ["memory", "context", "sessions", "documentation", "project-notes"],
+  "license": "Apache-2.0",
+  "runsWith": ["claude", "copilot", "codex", "gemini", "cursor"],
+  "for": ["beginner", "dev"],
+  "category": "start"
+}

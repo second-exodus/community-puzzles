@@ -1,0 +1,10 @@
+{
+  "kind": "skills",
+  "name": "write-agents-md",
+  "description": "Your assistant reads the project (manifests, CI, configs, recent commits) and writes an AGENTS.md with verified setup, build and test commands, structure, real conventions, pull request rules, security points and gotchas. Includes a template and a quality checklist.",
+  "tags": ["agents-md", "onboarding", "project-setup", "documentation", "instructions"],
+  "license": "MIT",
+  "runsWith": ["claude", "copilot", "codex", "gemini", "cursor"],
+  "for": ["beginner", "dev"],
+  "category": "start"
+}

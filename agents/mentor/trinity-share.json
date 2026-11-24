@@ -1,0 +1,10 @@
+{
+  "kind": "agents",
+  "name": "mentor",
+  "description": "A kind, firm coding mentor for beginners. It asks the right questions instead of handing out code, explains the why with analogies, gives hints in four levels, reviews your code for bugs, security and clarity, and ends with a short learning recap.",
+  "tags": ["mentoring", "learning", "socratic", "debugging", "code-review"],
+  "license": "MIT",
+  "runsWith": ["claude", "copilot", "codex", "gemini", "cursor"],
+  "for": ["beginner"],
+  "category": "start"
+}
