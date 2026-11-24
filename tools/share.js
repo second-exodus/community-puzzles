@@ -52,7 +52,7 @@ async function login() {
   while (Date.now() < until) {
     await sleep(4000);
     const t = await call('POST', '/auth/device/take', { ticket: b.body.ticket }, { auth: false });
-    if (t.status === 202) continue;
+    if (t.status === 202 || t.status === 502 || t.status === 503) continue;   // waiting, or the community restarting
     if (t.status !== 200) throw new Error(`take: ${t.status} ${JSON.stringify(t.body)}`);
     fs.mkdirSync(path.dirname(keyFile), { recursive: true, mode: 0o700 });
     fs.writeFileSync(keyFile, t.body.key + '\n', { mode: 0o600 });
