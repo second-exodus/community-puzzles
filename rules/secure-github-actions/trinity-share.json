@@ -1,0 +1,10 @@
+{
+  "kind": "rules",
+  "name": "secure-github-actions",
+  "description": "Rules for safe GitHub Actions workflows: no fork code on privileged triggers, no script injection through ${{ }} expressions, least-privilege tokens, SHA-pinned actions, careful secrets, artifacts, caches and runners, plus a severity guide and report format for workflow reviews.",
+  "tags": ["github-actions", "ci", "supply-chain", "secrets", "security"],
+  "license": "MIT",
+  "runsWith": ["claude", "copilot", "codex", "gemini", "cursor"],
+  "for": ["devops"],
+  "category": "pipeline/ci"
+}

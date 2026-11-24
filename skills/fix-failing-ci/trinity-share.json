@@ -1,0 +1,11 @@
+{
+  "kind": "skills",
+  "name": "fix-failing-ci",
+  "description": "Debug a red GitHub Actions run with the gh CLI: find the failing checks, pull the failed-step logs, extract the real first error, classify it (code, flaky, environment, workflow, secrets), propose a small fix plan, and change code only after your OK.",
+  "tags": ["ci", "github-actions", "debugging", "gh-cli", "pipeline"],
+  "license": "Apache-2.0",
+  "runsWith": ["claude", "copilot", "codex", "gemini", "cursor"],
+  "for": ["devops", "dev"],
+  "category": "pipeline/ci",
+  "example": "example/output.md"
+}
