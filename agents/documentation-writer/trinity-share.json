@@ -1,0 +1,10 @@
+{
+  "kind": "agents",
+  "name": "documentation-writer",
+  "description": "A technical writer that asks for type, audience, goal and scope, proposes an outline for approval, then writes one clean Diátaxis document (tutorial, how-to, reference or explanation) and checks every snippet and flag against the code.",
+  "tags": ["documentation", "diataxis", "technical-writing", "tutorials", "reference"],
+  "license": "MIT",
+  "runsWith": ["claude", "copilot", "codex", "gemini", "cursor"],
+  "for": ["docs"],
+  "category": "docs"
+}

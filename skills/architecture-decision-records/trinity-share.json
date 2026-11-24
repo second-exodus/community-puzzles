@@ -1,0 +1,10 @@
+{
+  "kind": "skills",
+  "name": "architecture-decision-records",
+  "description": "Write numbered Architecture Decision Records with honest options, trade-offs and consequences. Includes five templates (standard, lightweight, Y-statement, deprecation, RFC), an index, a lifecycle and a review checklist; drafts stay Proposed until the team decides.",
+  "tags": ["adr", "architecture", "decisions", "documentation", "templates"],
+  "license": "MIT",
+  "runsWith": ["claude", "copilot", "codex", "gemini", "cursor"],
+  "for": ["docs", "dev"],
+  "category": "docs"
+}

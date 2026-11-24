@@ -1,0 +1,10 @@
+{
+  "kind": "rules",
+  "name": "docs-with-code",
+  "description": "Rules that make the assistant update README, API docs, config docs, code examples, migration guides and the changelog in the same change as the code, with a done-checklist and a table of which change touches which document.",
+  "tags": ["documentation", "readme", "changelog", "api-docs", "code-review"],
+  "license": "MIT",
+  "runsWith": ["claude", "copilot", "codex", "gemini", "cursor"],
+  "for": ["docs", "dev"],
+  "category": "docs"
+}
