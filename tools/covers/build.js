@@ -1,5 +1,7 @@
 #!/usr/bin/env node
-// Draws the cover of every puzzle listed in covers.json into <puzzle>/media/cover.webp (1600 × 900).
+// Draws the cover of every puzzle listed in covers.json into <puzzle>/media/cover.webp (1600 × 900): its own motif
+// (cover.html `own`, by the puzzle's name) in its own two colours (covers.json "colors"); a puzzle without them gets
+// the motif and colours of its category.
 // Needs Google Chrome (or Chromium) for the drawing and ImageMagick (`magick`) for WebP.
 // Fonts: Trinity Mode and Jost from the Trinity Community checkout next to this repo (COVER_FONTS changes the folder).
 //
@@ -57,7 +59,8 @@ for (const p of list) {
     tagline: p.tagline,
     label: `${kinds[share.kind] || share.kind} · ${cat.name}`,
     motif: p.motif || cat.motif,
-    colors: { ...theme, c: wire[cat.c], c2: wire[cat.c2] },
+    // the puzzle's own two colours (covers.json "colors"), else those of its category
+    colors: { ...theme, c: wire[(p.colors || [])[0] || cat.c], c2: wire[(p.colors || [])[1] || cat.c2] },
   };
   const html = path.join(work, share.name + '.html');
   const png = path.join(work, share.name + '.png');

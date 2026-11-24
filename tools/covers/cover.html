@@ -7,7 +7,7 @@
 @font-face { font-family: "Trinity Mode"; src: url(__TRINITY__) format("woff2"); font-weight: 100 900; }
 @font-face { font-family: "Jost"; src: url(__JOST__) format("woff2"); font-weight: 300 700; }
 /* Colours: the dark theme of Trinity (trinity-community web/theme.json), filled in by build.js */
-:root { --bg: #121110; --text: #f3f0e8; --text-2: #b7b1a6; --text-3: #928c81; --c: #6ea2ff; --c2: #a892f0; --bad: #ff6b70; --good: #4cc38a; }
+:root { --bg: #121110; --text: #f3f0e8; --text-2: #b7b1a6; --text-3: #928c81; --c: #6ea2ff; --c2: #a892f0; --bad: #ff6b70; --good: #4cc38a; --ink: var(--text); }
 html, body { margin: 0; width: 1600px; height: 900px; overflow: hidden; background: var(--bg); }
 .cv { position: relative; width: 1600px; height: 900px; overflow: hidden; font-family: "Jost", sans-serif;
   background:
@@ -23,6 +23,7 @@ svg.m { position: absolute; inset: 0; }
 .tag { font: 300 34px/1.3 "Jost"; color: var(--text-2); max-width: 700px; letter-spacing: .01em; }
 .foot { position: absolute; left: 170px; bottom: 62px; display: flex; align-items: center; gap: 14px; font: 400 27px/1 "Trinity Mode", Georgia, serif; color: var(--text-3); }
 .foot svg { display: block; }
+.grain { position: absolute; inset: 0; opacity: .5; mix-blend-mode: overlay; pointer-events: none; }
 </style>
 </head>
 <body>
@@ -34,6 +35,7 @@ svg.m { position: absolute; inset: 0; }
     <div class="ttl" id="ttl"></div>
     <div class="tag" id="tag"></div>
   </div>
+  <svg class="grain" width="1600" height="900" aria-hidden="true"><filter id="n"><feTurbulence type="fractalNoise" baseFrequency=".85" numOctaves="2" stitchTiles="stitch"/><feColorMatrix values="0 0 0 0 .5  0 0 0 0 .5  0 0 0 0 .5  0 0 0 .55 0"/></filter><rect width="1600" height="900" filter="url(#n)"/></svg>
   <div class="foot">
     <svg width="26" height="24" viewBox="0 0 26 24"><circle cx="13" cy="4" r="3.2" fill="currentColor"/><circle cx="4" cy="20" r="3.2" fill="currentColor"/><circle cx="22" cy="20" r="3.2" fill="currentColor"/></svg>
     trinity-community
@@ -184,7 +186,245 @@ const motifs = {
     for (const p of [A, B, Cc]) { dot(p[0], p[1], 12, c, .95); ring(p[0], p[1], 24, c, 2, .4); }
   },
 };
-(motifs[C.motif] || motifs.triangle)();
+
+// ── own motifs: every puzzle its own picture of what it is about (design „Puzzle-Cover“, direction A, chosen 2026-11-24),
+// drawn in a 600 × 600 box right of the text. A puzzle without one gets the motif of its category above.
+const c2 = 'var(--c2)', ink = 'var(--ink)';
+const P = (d, o = {}) => out.push(`<path d="${d}" fill="${o.fill || 'none'}" stroke="${o.stroke || 'none'}" stroke-width="${o.w || 0}" stroke-linecap="round" stroke-linejoin="round" opacity="${o.o ?? 1}" ${o.dash ? `stroke-dasharray="${o.dash}"` : ''}/>`);
+const R = (x, y, w, h, rx, o = {}) => out.push(`<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="${rx}" fill="${o.fill || 'none'}" stroke="${o.stroke || 'none'}" stroke-width="${o.w || 0}" opacity="${o.o ?? 1}" ${o.dash ? `stroke-dasharray="${o.dash}"` : ''}/>`);
+const O = (x, y, r, o = {}) => out.push(`<circle cx="${x}" cy="${y}" r="${r}" fill="${o.fill || 'none'}" stroke="${o.stroke || 'none'}" stroke-width="${o.w || 0}" opacity="${o.o ?? 1}" ${o.dash ? `stroke-dasharray="${o.dash}"` : ''}/>`);
+const E = (x, y, rx, ry, o = {}) => out.push(`<ellipse cx="${x}" cy="${y}" rx="${rx}" ry="${ry}" fill="${o.fill || 'none'}" stroke="${o.stroke || 'none'}" stroke-width="${o.w || 0}" opacity="${o.o ?? 1}"/>`);
+const T = (x, y, s, text, o = {}) => out.push(`<text x="${x}" y="${y}" font-family="Jost" font-weight="${o.wt || 600}" font-size="${s}" fill="${o.fill}" text-anchor="${o.a || 'middle'}" opacity="${o.o ?? 1}" letter-spacing="${o.ls || 0}">${text}</text>`);
+const check = (x, y, k, col) => P(`M${x - 14 * k} ${y}l${10 * k} ${10 * k} ${20 * k} -${22 * k}`, { stroke: col, w: 9 * k });
+const own = {
+  // red, green, refactor: three stations in a loop
+  'test-driven-development'() {
+    const pts = [[300, 120, bad], [480, 420, good], [120, 420, c]];
+    P('M372 160 A250 250 0 0 1 492 330', { stroke: ink, w: 7, o: .5 }); P('M478 330l14 0 0 -16', { stroke: ink, w: 7, o: .5 });
+    P('M408 470 A250 250 0 0 1 192 470', { stroke: ink, w: 7, o: .5 }); P('M204 458l-12 12 12 12', { stroke: ink, w: 7, o: .5 });
+    P('M110 340 A250 250 0 0 1 228 160', { stroke: ink, w: 7, o: .5 }); P('M214 156l14 4 -2 16', { stroke: ink, w: 7, o: .5 });
+    for (const [x, y, col] of pts) { O(x, y, 92, { fill: col, o: .22 }); O(x, y, 92, { stroke: col, w: 8 }); }
+    P('M268 88l64 64M332 88l-64 64', { stroke: bad, w: 12 });
+    check(480, 424, 2.6, good);
+    P('M88 420a32 32 0 1 1 10 24', { stroke: c, w: 10 }); P('M86 446l12 -4 4 14', { stroke: c, w: 10 });
+  },
+  // a bug at the end of a trail of four checked steps, under a magnifier
+  'systematic-debugging'() {
+    P('M40 520 C160 520 140 380 260 380 S 360 240 430 200', { stroke: ink, w: 6, o: .45, dash: '4 20' });
+    [[40, 520], [170, 470], [260, 380], [350, 280]].forEach(([x, y], i) => { O(x, y, 26, { fill: c2, o: .9 }); T(x, y + 11, 30, String(i + 1), { fill: 'var(--bg)' }); });
+    O(440, 190, 118, { fill: c, o: .16 }); O(440, 190, 118, { stroke: ink, w: 14 }); P('M524 274l70 70', { stroke: ink, w: 26 });
+    R(408, 150, 64, 92, 32, { fill: bad }); O(440, 140, 20, { fill: bad });
+    P('M408 172l-30 -14M408 200l-34 0M408 228l-30 14M472 172l30 -14M472 200l34 0M472 228l30 14M432 122l-12 -22M448 122l12 -22', { stroke: bad, w: 7 });
+  },
+  // the real browser: a page, a cursor on its button, a green check
+  'webapp-testing'() {
+    R(40, 70, 520, 400, 26, { fill: 'var(--bg)', o: .55 }); R(40, 70, 520, 400, 26, { stroke: ink, w: 8 });
+    P('M40 140h520', { stroke: ink, w: 6, o: .6 }); [80, 112, 144].forEach(x => O(x, 105, 10, { fill: ink, o: .6 }));
+    R(90, 180, 300, 28, 14, { fill: ink, o: .35 }); R(90, 230, 220, 28, 14, { fill: ink, o: .2 });
+    R(90, 290, 420, 56, 14, { stroke: ink, w: 5, o: .55 });
+    R(90, 378, 210, 64, 32, { fill: c });
+    P('M268 404l0 120 34 -30 26 58 24 -12 -26 -56 46 -4z', { fill: ink, stroke: 'var(--bg)', w: 6 });
+    O(500, 410, 66, { fill: good }); check(500, 414, 2.2, 'var(--bg)');
+  },
+  // a thousand generated inputs fall through; one red one gets caught
+  'property-based-testing'() {
+    for (let i = 0; i < 120; i++) { const x = 60 + rnd() * 480, y = 20 + rnd() * 250, r = 4 + rnd() * 9; O(x, y, r, { fill: rnd() < .5 ? c : c2, o: .35 + rnd() * .5 }); }
+    P('M60 290 L540 290 L360 440 L360 560 L240 560 L240 440 Z', { fill: ink, o: .12 }); P('M60 290 L540 290 L360 440 L360 560 L240 560 L240 440 Z', { stroke: ink, w: 8, o: .8 });
+    O(300, 500, 32, { fill: bad }); O(300, 500, 58, { stroke: bad, w: 6, dash: '10 12' });
+  },
+  // the map of what tests cover; the holes are what no test protects
+  'test-gap-audit'() {
+    const holes = new Set([12, 13, 22, 23, 24, 33, 47, 58]);
+    for (let i = 0; i < 8; i++) for (let j = 0; j < 8; j++) {
+      const k = j * 8 + i, x = 50 + i * 64, y = 40 + j * 64;
+      if (holes.has(k)) R(x, y, 52, 52, 10, { stroke: bad, w: 5, dash: '9 9' });
+      else R(x, y, 52, 52, 10, { fill: rnd() < .3 ? c2 : c, o: .3 + rnd() * .5 });
+    }
+    O(286, 172, 104, { stroke: ink, w: 14 }); P('M360 246l90 90', { stroke: ink, w: 26 });
+  },
+  // findings ranked by what hurts most: P0 … P3
+  'review-rubric'() {
+    [['P0', bad, 470], ['P1', c, 380], ['P2', ink, 290], ['P3', ink, 200]].forEach(([p, col, w], i) => {
+      const y = 70 + i * 120;
+      R(40, y, 96, 82, 20, { fill: col, o: i === 3 ? .45 : i === 2 ? .8 : 1 }); T(88, y + 56, 42, p, { fill: 'var(--bg)', wt: 700 });
+      R(160, y + 14, w, 54, 27, { fill: col, o: i >= 2 ? .3 : .6 });
+    });
+  },
+  // a review in three passes: intent, correctness, upkeep — three sheets, the front one done
+  'code-review-and-quality'() {
+    [[150, 30, c2, .45], [100, 110, c, .65], [50, 190, ink, 1]].forEach(([x, y, col, o], i) => {
+      R(x, y, 400, 330, 24, { fill: 'var(--bg)', o: .7 }); R(x, y, 400, 330, 24, { stroke: col, w: 8, o });
+      for (let l = 0; l < 5; l++) R(x + 44, y + 60 + l * 50, 140 + ((l * 73 + i * 31) % 160), 18, 9, { fill: col, o: o * .5 });
+      O(x + 360, y + 40, 26, { fill: col, o }); T(x + 360, y + 51, 30, String(3 - i), { fill: 'var(--bg)' });
+    });
+    O(470, 500, 62, { fill: good }); check(470, 504, 2, 'var(--bg)');
+  },
+  // a comment arrives: check it, then fix, ask, or push back
+  'receiving-code-review'() {
+    const bubble = (x, y, w, h, col, tailLeft) => { R(x, y, w, h, 34, { fill: col, o: .9 }); P(tailLeft ? `M${x + 50} ${y + h - 4}l-20 46 60 -46z` : `M${x + w - 50} ${y + h - 4}l20 46 -60 -46z`, { fill: col, o: .9 }); };
+    bubble(30, 40, 330, 150, c, true); R(70, 90, 200, 18, 9, { fill: 'var(--bg)', o: .5 }); R(70, 126, 140, 18, 9, { fill: 'var(--bg)', o: .5 });
+    bubble(250, 250, 300, 140, good, false); check(400, 322, 2.4, 'var(--bg)');
+    bubble(60, 430, 160, 120, c2, true); T(140, 516, 76, '?', { fill: 'var(--bg)', wt: 700 });
+    bubble(330, 450, 210, 110, ink, false); P('M470 478 a34 34 0 1 0 0 60 h-70 M418 520 l-18 18 18 18', { stroke: 'var(--bg)', w: 9 });
+  },
+  // better, not perfect: the health of the code base steps up; perfect stays a dashed line above
+  'code-review-standard'() {
+    P('M40 90H560', { stroke: ink, w: 5, o: .45, dash: '14 16' }); T(560, 70, 26, 'perfect', { fill: ink, a: 'end', o: .55, wt: 500, ls: 2 });
+    let x = 40, y = 520; const steps = [[90, 0], [90, 60], [90, 30], [90, 90], [90, 50], [70, 80]];
+    let d = `M${x} ${y}`; for (const [dx, dy] of steps) { x += dx; d += `H${x}`; y -= dy; d += `V${y}`; }
+    P(d + `V560H40Z`, { fill: c, o: .3 }); P(d, { stroke: c, w: 12 });
+    O(x, y, 52, { fill: good }); check(x, y + 4, 1.8, 'var(--bg)');
+  },
+  // read the diff like an attacker: removed safeguards in red, a keyhole over them
+  'differential-security-review'() {
+    for (let l = 0; l < 9; l++) {
+      const y = 40 + l * 58, kind = [0, 2, 0, 1, 0, 2, 0, 0, 1][l];
+      if (kind) R(30, y - 6, 540, 46, 10, { fill: kind === 1 ? bad : good, o: .22 });
+      R(54, y + 8, 18, 18, 4, { fill: kind === 1 ? bad : kind === 2 ? good : ink, o: kind ? 1 : .3 });
+      R(96, y + 6, 120 + ((l * 97) % 260), 22, 11, { fill: kind === 1 ? bad : kind === 2 ? good : ink, o: kind ? .8 : .22 });
+    }
+    P('M380 170 l120 44 v110 c0 90 -62 150 -120 176 c-58 -26 -120 -86 -120 -176 v-110 z', { fill: 'var(--bg)', o: .82 });
+    P('M380 170 l120 44 v110 c0 90 -62 150 -120 176 c-58 -26 -120 -86 -120 -176 v-110 z', { stroke: c, w: 12 });
+    O(380, 320, 34, { fill: c }); P('M364 340 l-14 90 h60 l-14 -90 z', { fill: c });
+  },
+
+  // from done to live, with a way back
+  'shipping-and-launch'() {
+    R(40, 400, 150, 120, 22, { fill: c2, o: .9 }); check(115, 462, 2, 'var(--bg)');
+    P('M190 440 C 300 440 330 170 440 160', { stroke: ink, w: 10 });
+    P('M450 50 v240', { stroke: ink, w: 10 }); P('M454 56 l116 36 -116 36z', { fill: c });
+    P('M436 340 C 380 520 270 560 214 530', { stroke: c2, w: 8, dash: '16 16' }); P('M232 512 l-20 20 28 10', { stroke: c2, w: 8 });
+  },
+  // the right version number, notes people read
+  'github-release'() {
+    P('M40 150 h330 l100 100 -100 100 h-330 z', { fill: c }); O(400, 250, 18, { fill: 'var(--bg)' });
+    T(200, 274, 70, 'v2.1.0', { fill: 'var(--bg)', wt: 600 });
+    [[420, .6], [330, .35], [370, .35], [260, .35]].forEach(([w, o], i) => { O(54, 432 + i * 44, 9, { fill: i ? ink : c2, o: i ? .5 : 1 }); R(80, 420 + i * 44, w, 24, 12, { fill: i ? ink : c2, o }); });
+  },
+  // a changelog that writes itself from the history
+  'changelog-automation'() {
+    P('M80 50 V550', { stroke: ink, w: 6, o: .45 });
+    for (let i = 0; i < 7; i++) O(80, 70 + i * 78, 18, { fill: i % 3 ? c : c2 });
+    P('M130 300 h80', { stroke: ink, w: 9 }); P('M196 280 l24 20 -24 20', { stroke: ink, w: 9 });
+    R(260, 60, 300, 480, 24, { fill: 'var(--bg)', o: .6 }); R(260, 60, 300, 480, 24, { stroke: ink, w: 7 });
+    [[100, c], [300, c2]].forEach(([y, col]) => { R(296, y, 130, 24, 12, { fill: col }); for (let l = 0; l < 3; l++) R(296, y + 50 + l * 40, 200 - l * 40, 16, 8, { fill: ink, o: .35 }); });
+  },
+  // commit messages machines and people can read
+  'conventional-commits'() {
+    [['feat:', c, 300], ['fix:', bad, 240], ['docs:', c2, 270]].forEach(([word, col, w], i) => {
+      const y = 70 + i * 165; R(30, y, 190, 100, 50, { fill: col }); T(125, y + 66, 48, word, { fill: 'var(--bg)', wt: 600 });
+      R(250, y + 22, w, 26, 13, { fill: ink, o: .55 }); R(250, y + 60, w - 90, 20, 10, { fill: ink, o: .25 });
+    });
+  },
+  // read the red run, find the cause, make it green
+  'fix-failing-ci'() {
+    P('M70 190 H530', { stroke: ink, w: 8, o: .45 });
+    [[70, good], [223, good], [376, bad], [530, null]].forEach(([x, col]) => { if (col) O(x, 190, 52, { fill: col }); else O(x, 190, 52, { stroke: ink, w: 8, o: .5 }); });
+    check(70, 194, 1.6, 'var(--bg)'); check(223, 194, 1.6, 'var(--bg)'); P('M352 166l48 48M400 166l-48 48', { stroke: 'var(--bg)', w: 11 });
+    P('M376 250 C 376 330 376 360 376 380', { stroke: c, w: 9, dash: '14 14' }); P('M356 360 l20 24 20 -24', { stroke: c, w: 9 });
+    O(376, 470, 62, { fill: good }); check(376, 474, 2, 'var(--bg)');
+  },
+  // tutorials, how-tos, reference and explanation, each in its place
+  'documentation-writer'() {
+    R(40, 40, 250, 250, 28, { fill: c }); R(310, 40, 250, 250, 28, { fill: c2 }); R(40, 310, 250, 250, 28, { fill: ink, o: .85 }); R(310, 310, 250, 250, 28, { fill: good });
+    [100, 165, 230].forEach((x, i) => { O(x, 165, 24, { fill: 'var(--bg)', o: .85 }); T(x, 176, 30, String(i + 1), { fill: c, wt: 700 }); });
+    [100, 150, 200].forEach(y => { check(380, y + 4, 1.1, 'var(--bg)'); R(410, y - 8, 110, 18, 9, { fill: 'var(--bg)', o: .6 }); });
+    [370, 410, 450, 490].forEach(y => R(80, y, 170, 16, 8, { fill: 'var(--bg)', o: .7 }));
+    O(435, 410, 54, { fill: 'var(--bg)', o: .85 }); R(415, 466, 40, 34, 8, { fill: 'var(--bg)', o: .85 });
+  },
+  // write down why, so nobody has to guess later
+  'architecture-decision-records'() {
+    R(300, 40, 260, 330, 24, { fill: 'var(--bg)', o: .55 }); R(300, 40, 260, 330, 24, { stroke: ink, w: 7, o: .7 });
+    R(330, 80, 120, 24, 12, { fill: c }); for (let l = 0; l < 5; l++) R(330, 130 + l * 40, 190 - (l % 2) * 50, 16, 8, { fill: ink, o: .35 });
+    O(80, 520, 24, { fill: ink }); P('M80 500 V420 C80 340 160 330 210 270', { stroke: c, w: 13 });
+    O(222, 254, 46, { fill: good }); check(222, 258, 1.5, 'var(--bg)');
+    P('M80 420 C 140 380 230 420 270 480', { stroke: ink, w: 8, dash: '14 16', o: .6 }); O(286, 496, 32, { stroke: bad, w: 7 }); P('M272 482l28 28M300 482l-28 28', { stroke: bad, w: 7 });
+  },
+  // every change updates the docs it makes wrong
+  'docs-with-code'() {
+    R(30, 150, 220, 300, 26, { fill: c }); P('M110 250 l-40 50 40 50 M170 250 l40 50 -40 50', { stroke: 'var(--bg)', w: 15 });
+    R(350, 150, 220, 300, 26, { fill: 'var(--bg)', o: .6 }); R(350, 150, 220, 300, 26, { stroke: ink, w: 7 });
+    for (let l = 0; l < 5; l++) R(384, 200 + l * 46, 150 - (l % 2) * 40, 18, 9, { fill: ink, o: .4 });
+    R(236, 278, 74, 44, 22, { stroke: c2, w: 11 }); R(290, 278, 74, 44, 22, { stroke: c2, w: 11 });
+  },
+  // less code, same behaviour, easier to read
+  'code-simplification'() {
+    P('M40 300 C 70 120 150 480 190 260 S 110 110 240 190 S 310 430 290 300', { stroke: c2, w: 11, o: .9 });
+    P('M330 300 h50', { stroke: ink, w: 9 }); P('M366 282 l20 18 -20 18', { stroke: ink, w: 9 });
+    P('M420 300 H560', { stroke: c, w: 16 }); O(420, 300, 18, { fill: c }); O(560, 300, 18, { fill: c });
+  },
+  // small safe steps, tests green after each one
+  'refactor'() {
+    for (let i = 0; i < 5; i++) { const x = 30 + i * 108, y = 460 - i * 92; R(x, y, 96, 64, 16, { fill: i % 2 ? c2 : c }); O(x + 96, y - 4, 22, { fill: good }); check(x + 96, y - 2, .8, 'var(--bg)'); }
+  },
+  // walk the code the way an attacker would
+  'security-audit'() {
+    for (let l = 0; l < 9; l++) R(40, 40 + l * 60, 200 + ((l * 113) % 300), 22, 11, { fill: ink, o: .22 });
+    [[90, 520], [150, 470], [190, 400], [250, 350], [300, 280], [370, 240]].forEach(([x, y], i) => E(x + (i % 2) * 18, y, 13, 20, { fill: bad, o: .9 }));
+    O(410, 190, 112, { fill: c, o: .18 }); O(410, 190, 112, { stroke: ink, w: 14 }); P('M490 270l70 70', { stroke: ink, w: 26 });
+    E(410, 190, 54, 30, { stroke: ink, w: 9 }); O(410, 190, 16, { fill: ink });
+  },
+  // what can go wrong, who would do it, what stops them
+  'threat-model'() {
+    R(30, 70, 170, 110, 20, { stroke: ink, w: 8 }); R(400, 70, 170, 110, 20, { stroke: ink, w: 8 }); R(215, 420, 170, 110, 20, { stroke: ink, w: 8 });
+    P('M200 125 H400', { stroke: ink, w: 7, o: .6 }); P('M115 180 L260 420', { stroke: ink, w: 7, o: .6 }); P('M485 180 L340 420', { stroke: ink, w: 7, o: .6 });
+    P('M330 200 l-50 80 h44 l-36 84 96 -116 h-46 l38 -48z', { fill: bad });
+    P('M470 250 l70 26 v66 c0 54 -36 90 -70 106 c-34 -16 -70 -52 -70 -106 v-66 z', { fill: c }); check(470, 330, 1.4, 'var(--bg)');
+  },
+  // the top risks of the web, turned into rules
+  'owasp-secure-coding'() {
+    for (let i = 0; i < 10; i++) { const x = 30 + (i < 5 ? 0 : 160), y = 30 + (i % 5) * 110; R(x, y, 120, 90, 20, { fill: i < 3 ? bad : i < 6 ? c : c2 }); T(x + 60, y + 60, 42, String(i + 1), { fill: 'var(--bg)', wt: 700 }); }
+    P('M470 150 l100 36 v92 c0 78 -52 128 -100 150 c-48 -22 -100 -72 -100 -150 v-92 z', { fill: ink, o: .9 }); check(470, 270, 2, 'var(--bg)');
+  },
+  // pinned actions, least privilege, no injection
+  'secure-github-actions'() {
+    const n = [[90, 300], [270, 150], [270, 450], [460, 300]];
+    P('M90 300 L270 150 L460 300 L270 450 Z', { stroke: ink, w: 7, o: .55 });
+    for (const [x, y] of n) { O(x, y, 62, { fill: c }); R(x - 22, y - 4, 44, 34, 8, { fill: 'var(--bg)' }); P(`M${x - 13} ${y - 4} v-12 a13 13 0 0 1 26 0 v12`, { stroke: 'var(--bg)', w: 7 }); }
+    P('M580 40 L520 150', { stroke: bad, w: 10 }); P('M500 128 l44 26', { stroke: bad, w: 14 });
+  },
+  // say what, then how, then the steps — in that order
+  'spec-plan-tasks'() {
+    R(30, 330, 160, 210, 20, { fill: c }); for (let l = 0; l < 4; l++) R(56, 370 + l * 38, 108 - (l % 2) * 30, 16, 8, { fill: 'var(--bg)', o: .6 });
+    R(220, 200, 160, 210, 20, { fill: c2 }); O(270, 260, 18, { fill: 'var(--bg)', o: .7 }); O(330, 330, 18, { fill: 'var(--bg)', o: .7 }); O(270, 370, 18, { fill: 'var(--bg)', o: .7 }); P('M270 260 L330 330 L270 370', { stroke: 'var(--bg)', w: 6, o: .7 });
+    R(410, 70, 160, 210, 20, { fill: ink, o: .9 }); [120, 170, 220].forEach(y => check(450, y + 4, 1, good));
+    P('M190 330 l26 -26M380 200 l26 -26', { stroke: ink, w: 8 });
+  },
+  // agree on the design first, then write the plan
+  'brainstorm-and-plan'() {
+    const notes = [[50, 60, c], [170, 30, c2], [90, 190, bad], [210, 160, c], [40, 330, c2], [170, 300, good]];
+    notes.forEach(([x, y, col], i) => { const a = (i % 2 ? 1 : -1) * 12; P(`M${x} ${y} l90 ${a} ${-a} 90 -90 ${-a}z`, { fill: col, o: .9 }); });
+    P('M330 300 h50', { stroke: ink, w: 9 }); P('M366 282 l20 18 -20 18', { stroke: ink, w: 9 });
+    [0, 1, 2, 3].forEach(i => { const y = 150 + i * 80; O(430, y, 22, { fill: ink }); T(430, y + 10, 28, String(i + 1), { fill: 'var(--bg)', wt: 700 }); R(466, y - 10, 110 - (i % 2) * 30, 20, 10, { fill: ink, o: .45 }); });
+  },
+  // from an idea to a requirements doc to a task list
+  'prd-to-tasks'() {
+    O(90, 250, 62, { fill: c2 }); R(68, 312, 44, 40, 10, { fill: c2 }); P('M76 362 h28', { stroke: c2, w: 8 });
+    P('M170 280 h40', { stroke: ink, w: 8 }); P('M198 264 l16 16 -16 16', { stroke: ink, w: 8 });
+    R(240, 150, 150, 230, 20, { fill: 'var(--bg)', o: .6 }); R(240, 150, 150, 230, 20, { stroke: ink, w: 7 }); for (let l = 0; l < 5; l++) R(266, 190 + l * 36, 96 - (l % 2) * 24, 14, 7, { fill: ink, o: .4 });
+    P('M400 280 h40', { stroke: ink, w: 8 }); P('M428 264 l16 16 -16 16', { stroke: ink, w: 8 });
+    R(460, 130, 120, 270, 20, { fill: c }); [180, 250, 320].forEach(y => check(500, y + 4, 1, 'var(--bg)'));
+  },
+  // one file that tells every assistant how your project works
+  'write-agents-md'() {
+    const around = [[80, 90], [520, 90], [60, 470], [540, 470], [300, 40]];
+    for (const [x, y] of around) { P(`M300 300 L${x} ${y}`, { stroke: ink, w: 6, o: .45 }); O(x, y, 40, { fill: c2 }); O(x - 12, y - 4, 6, { fill: 'var(--bg)' }); O(x + 12, y - 4, 6, { fill: 'var(--bg)' }); }
+    R(170, 190, 260, 230, 24, { fill: c }); T(300, 318, 40, 'AGENTS.md', { fill: 'var(--bg)', wt: 600 });
+  },
+  // explains, asks back and lets you write the code
+  'mentor'() {
+    R(30, 60, 260, 170, 40, { fill: c2 }); P('M80 226 l-20 54 66 -54z', { fill: c2 }); T(160, 182, 110, '?', { fill: 'var(--bg)', wt: 700 });
+    R(310, 160, 260, 170, 40, { fill: c }); P('M520 326 l20 54 -66 -54z', { fill: c }); O(440, 230, 40, { fill: 'var(--bg)', o: .85 }); R(424, 268, 32, 26, 6, { fill: 'var(--bg)', o: .85 });
+    R(60, 440, 360, 30, 15, { fill: ink, o: .45 }); R(440, 430, 18, 52, 4, { fill: good });
+  },
+  // the assistant remembers your project between sessions
+  'memory-bank'() {
+    for (let i = 2; i >= 0; i--) { const y = 160 + i * 110; E(300, y + 70, 200, 52, { fill: i === 0 ? c : c2, o: .9 }); R(100, y, 400, 70, 0, { fill: i === 0 ? c : c2, o: .9 }); E(300, y, 200, 52, { fill: i === 0 ? c : c2 }); E(300, y, 200, 52, { stroke: 'var(--bg)', w: 4, o: .5 }); }
+    P('M440 60 v140 l30 -24 30 24 v-140 z', { fill: bad });
+  },
+};
+if (own[C.name]) { out.push('<g transform="translate(930 150)">'); own[C.name](); out.push('</g>'); }
+else (motifs[C.motif] || motifs.triangle)();
 document.getElementById('m').innerHTML = out.join('');
 
 // the title fits in three lines: smaller steps until it does

@@ -87,7 +87,7 @@ the substance, removed what only one vendor's tool understands, fixed mistakes w
   trinity-share.json                              what the Trinity Community shows: kind, tags, licence, runs with
   SOURCE.md                                       original file and commit, author, licence, every change we made
   LICENSE (NOTICE)                                the licence text of the original
-  media/cover.webp                                the cover, drawn by tools/covers
+  media/cover.webp                                the cover: its own picture, drawn by tools/covers
 ```
 
 To use one without Trinity: copy the folder into the place your assistant reads instructions from (for example a

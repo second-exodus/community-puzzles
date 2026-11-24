@@ -26,9 +26,13 @@ the Trinity Community lists a folder at a git tag. Read this before you add or c
   CC BY-SA. Never suggest the original author or vendor stands behind this repo.
 - **Draft until a person says yes.** A new or changed puzzle has `status: draft` in its front matter. Only a
   maintainer removes it, after reading the puzzle.
-- **Covers:** add the puzzle to `tools/covers/covers.json` (title and one-line tagline), then
-  `node tools/covers/build.js <name>`. Needs Google Chrome or Chromium and ImageMagick; the fonts come from the
-  Trinity Community checkout next to this repo (`COVER_FONTS` points elsewhere).
+- **Covers:** every puzzle gets its own cover, never only the one of its category: a picture of what the puzzle is
+  about, in its own two colours. Add the puzzle to `tools/covers/covers.json` (title, one-line tagline and `colors`,
+  two of `accent`, `lead`, `wire-1` … `wire-5`, chosen so it does not look like its neighbours), draw its motif in
+  `tools/covers/cover.html` under `own` (key: the puzzle's name, a 600 × 600 box), then
+  `node tools/covers/build.js <name>`. Without an own motif the build falls back to the motif of the category, which
+  is only a placeholder. Needs Google Chrome or Chromium and ImageMagick; the fonts come from the Trinity Community
+  checkout next to this repo (`COVER_FONTS` points elsewhere).
 - **Commits:** one line in English, then text if needed. One topic per commit.
 - **Versions:** the community lists a folder at a tag. The first release of all puzzles is the tag `v1`; a later
   version of one puzzle gets its own tag (`<name>-v2`, …). Tags are never moved or deleted.
