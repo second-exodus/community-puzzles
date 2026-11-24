@@ -1,0 +1,10 @@
+{
+  "kind": "rules",
+  "name": "owasp-secure-coding",
+  "description": "Secure coding rules for web and backend code, grouped by the OWASP Top 10 2025 risks. Every rule has a severity and most have a search pattern to spot the anti-pattern, plus short before/after code for SQL, commands, SSRF, path traversal, IDOR, JWT, passwords, errors and headers.",
+  "tags": ["security", "owasp", "secure-coding", "web", "review"],
+  "license": "MIT",
+  "runsWith": ["claude", "copilot", "codex", "gemini", "cursor"],
+  "for": ["dev"],
+  "category": "security"
+}

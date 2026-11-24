@@ -1,0 +1,11 @@
+{
+  "kind": "skills",
+  "name": "threat-model",
+  "description": "A threat model built from the repository itself: components, trust boundaries with a diagram, assets, attacker model, concrete abuse paths, a prioritised threat table with mitigations and detection ideas, and the files worth a manual review. It checks key assumptions with you before writing.",
+  "tags": ["security", "threat-model", "appsec", "abuse-paths", "architecture"],
+  "license": "Apache-2.0",
+  "runsWith": ["claude", "copilot", "codex", "gemini", "cursor"],
+  "for": ["dev"],
+  "category": "security",
+  "example": "example/output.md"
+}

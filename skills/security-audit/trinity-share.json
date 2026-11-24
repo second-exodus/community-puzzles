@@ -1,0 +1,15 @@
+{
+  "kind": "skills",
+  "name": "security-audit",
+  "description": "A full, source-first security audit: map trust boundaries, hunt by attack class against a coverage plan, let an independent reviewer try to refute every finding, and get a report with confirmed findings, open leads with exact blockers, smallest fixes and an honest coverage statement.",
+  "tags": ["security", "audit", "vulnerabilities", "pentest", "appsec"],
+  "license": "MIT",
+  "runsWith": ["claude", "copilot", "codex", "gemini", "cursor"],
+  "for": ["dev", "devops"],
+  "category": "security",
+  "variables": [
+    { "name": "profile", "default": "standard", "about": "quick, standard or deep: how broad and redundant the run is; the evidence bar never changes." },
+    { "name": "output-dir", "default": "../<repo-name>-security-audit/run-<N>/", "about": "Where the audit files go; outside the repository unless a git-ignored folder is chosen." }
+  ],
+  "example": "example/output.md"
+}
