@@ -1,0 +1,197 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>cover</title>
+<style>
+@font-face { font-family: "Trinity Mode"; src: url(__TRINITY__) format("woff2"); font-weight: 100 900; }
+@font-face { font-family: "Jost"; src: url(__JOST__) format("woff2"); font-weight: 300 700; }
+/* Colours: the dark theme of Trinity (trinity-community web/theme.json), filled in by build.js */
+:root { --bg: #121110; --text: #f3f0e8; --text-2: #b7b1a6; --text-3: #928c81; --c: #6ea2ff; --c2: #a892f0; --bad: #ff6b70; --good: #4cc38a; }
+html, body { margin: 0; width: 1600px; height: 900px; overflow: hidden; background: var(--bg); }
+.cv { position: relative; width: 1600px; height: 900px; overflow: hidden; font-family: "Jost", sans-serif;
+  background:
+    radial-gradient(1150px 820px at 84% 46%, color-mix(in oklab, var(--c) 30%, var(--bg)) 0%, transparent 72%),
+    radial-gradient(900px 700px at -4% 108%, color-mix(in oklab, var(--c2) 16%, var(--bg)) 0%, transparent 70%),
+    var(--bg); }
+svg.m { position: absolute; inset: 0; }
+.veil { position: absolute; inset: 0; background: linear-gradient(90deg, var(--bg) 0%, color-mix(in oklab, var(--bg) 94%, transparent) 40%, transparent 66%); }
+.txt { position: absolute; left: 170px; top: 0; bottom: 0; width: 740px; display: flex; flex-direction: column; justify-content: center; gap: 30px; }
+.lab { font: 500 22px/1 "Jost"; letter-spacing: .22em; text-transform: uppercase; color: var(--c); display: flex; align-items: center; gap: 16px; }
+.lab i { display: block; width: 44px; height: 2px; background: var(--c); }
+.ttl { font: 400 120px/.98 "Trinity Mode", Georgia, serif; color: var(--text); letter-spacing: -.005em; }
+.tag { font: 300 34px/1.3 "Jost"; color: var(--text-2); max-width: 700px; letter-spacing: .01em; }
+.foot { position: absolute; left: 170px; bottom: 62px; display: flex; align-items: center; gap: 14px; font: 400 27px/1 "Trinity Mode", Georgia, serif; color: var(--text-3); }
+.foot svg { display: block; }
+</style>
+</head>
+<body>
+<div class="cv">
+  <svg class="m" id="m" width="1600" height="900" viewBox="0 0 1600 900"></svg>
+  <div class="veil"></div>
+  <div class="txt">
+    <div class="lab"><i></i><span id="lab"></span></div>
+    <div class="ttl" id="ttl"></div>
+    <div class="tag" id="tag"></div>
+  </div>
+  <div class="foot">
+    <svg width="26" height="24" viewBox="0 0 26 24"><circle cx="13" cy="4" r="3.2" fill="currentColor"/><circle cx="4" cy="20" r="3.2" fill="currentColor"/><circle cx="22" cy="20" r="3.2" fill="currentColor"/></svg>
+    trinity-community
+  </div>
+</div>
+<script>
+const C = __COVER__;
+const root = document.documentElement.style;
+for (const [k, v] of Object.entries(C.colors)) root.setProperty('--' + k, v);
+document.getElementById('lab').textContent = C.label;
+document.getElementById('ttl').textContent = C.title;
+document.getElementById('tag').textContent = C.tagline;
+
+// a seeded random from the puzzle's name: every cover differs, the same puzzle always gets the same cover
+let h = 2166136261; for (const ch of C.name) { h ^= ch.charCodeAt(0); h = Math.imul(h, 16777619); }
+let s = h >>> 0;
+const rnd = () => { s |= 0; s = s + 0x6D2B79F5 | 0; let t = Math.imul(s ^ s >>> 15, 1 | s); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; };
+const pick = a => a[Math.floor(rnd() * a.length)];
+const out = [];
+const dot = (x, y, r, fill, o = 1) => out.push(`<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="${r.toFixed(2)}" fill="${fill}" opacity="${o.toFixed(2)}"/>`);
+const ring = (x, y, r, stroke, w, o = 1) => out.push(`<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="${r.toFixed(2)}" fill="none" stroke="${stroke}" stroke-width="${w}" opacity="${o.toFixed(2)}"/>`);
+const bar = (x, y, w, hgt, fill, o = 1) => out.push(`<rect x="${x.toFixed(1)}" y="${y.toFixed(1)}" width="${Math.max(hgt, w).toFixed(1)}" height="${hgt}" rx="${hgt / 2}" fill="${fill}" opacity="${o.toFixed(2)}"/>`);
+const box = (x, y, w, hgt, stroke, o = 1, fill = 'none') => out.push(`<rect x="${x.toFixed(1)}" y="${y.toFixed(1)}" width="${w}" height="${hgt}" rx="14" fill="${fill}" stroke="${stroke}" stroke-width="2" opacity="${o.toFixed(2)}"/>`);
+const path = (d, stroke, w, o = 1, dash = '') => out.push(`<path d="${d}" fill="none" stroke="${stroke}" stroke-width="${w}" stroke-linecap="round" ${dash ? `stroke-dasharray="${dash}"` : ''} opacity="${o.toFixed(2)}"/>`);
+const c = 'var(--c)', t = 'var(--text)', bad = 'var(--bad)', good = 'var(--good)';
+
+const motifs = {
+  // tests: a grid of checks; a few red, most passing (red, then green)
+  grid() {
+    const cols = 10, rows = 11, gap = 58, x0 = 1010 + rnd() * 20, y0 = 450 - (rows - 1) * gap / 2;
+    const fails = new Set(Array.from({ length: 2 + Math.floor(rnd() * 3) }, () => Math.floor(rnd() * cols * rows)));
+    for (let i = 0; i < cols; i++) for (let j = 0; j < rows; j++) {
+      const x = x0 + i * gap, y = y0 + j * gap, k = i * rows + j, fade = .35 + .65 * (i / cols);
+      if (fails.has(k)) { ring(x, y, 15, bad, 3, .95); dot(x, y, 5, bad, .95); }
+      else if (rnd() < .2) { ring(x, y, 15, c, 3, .9 * fade); dot(x, y, 5, c, .95 * fade); }
+      else dot(x, y, 3.2 + rnd() * 2.4, c, (.18 + rnd() * .3) * fade);
+    }
+  },
+  // review: lines of code as token bars, some rows added (+) or removed (−)
+  diff() {
+    const rows = 15, lh = 50, y0 = 450 - (rows - 1) * lh / 2;
+    for (let j = 0; j < rows; j++) {
+      const y = y0 + j * lh, mark = rnd(), x0 = 1050 + Math.floor(rnd() * 4) * 30;
+      const added = mark < .17, removed = !added && mark < .27;
+      if (added || removed) {
+        out.push(`<rect x="990" y="${y - 20}" width="660" height="40" rx="8" fill="${added ? good : bad}" opacity=".13"/>`);
+        dot(1014, y, 6, added ? good : bad, .95);
+      }
+      let x = x0;
+      const n = 2 + Math.floor(rnd() * 6);
+      for (let k = 0; k < n && x < 1560; k++) {
+        const w = 22 + rnd() * 96;
+        bar(x, y - 6, w, 12, added ? good : removed ? bad : k === 0 ? c : t, added || removed ? .85 : k === 0 ? .75 : .16 + rnd() * .2);
+        x += w + 16;
+      }
+    }
+  },
+  // release: rising paths, the main one ends in a burst
+  ascent() {
+    const paths = 3 + Math.floor(rnd() * 6), lift = rnd() * 160;
+    for (let p = 0; p < paths; p++) {
+      const main = p === 0, sx = 940 + rnd() * 120, sy = 820 + rnd() * 60, ex = 1360 + rnd() * 200, ey = 110 + lift + rnd() * 220 + p * 18;
+      const cx = sx + (ex - sx) * (.55 + rnd() * .3), cy = sy - 60 - rnd() * 80;
+      const n = main ? 34 : 24;
+      for (let i = 0; i <= n; i++) {
+        const u = i / n, x = (1 - u) ** 2 * sx + 2 * (1 - u) * u * cx + u * u * ex, y = (1 - u) ** 2 * sy + 2 * (1 - u) * u * cy + u * u * ey;
+        dot(x, y, (main ? 2.5 : 1.8) + u * (main ? 7 : 3.5), main ? c : t, main ? .4 + .6 * u : .1 + .25 * u);
+      }
+      if (main) for (let i = 0; i < 26; i++) { const a = rnd() * Math.PI * 2, d = 26 + rnd() * 90; dot(ex + Math.cos(a) * d, ey + Math.sin(a) * d, 2 + rnd() * 4, i % 4 ? c : t, .3 + rnd() * .6); }
+    }
+  },
+  // docs: two pages of text lines
+  pages() {
+    const page = (x, y, rot, o) => {
+      out.push(`<g transform="rotate(${rot} ${x + 260} ${y + 330})" opacity="${o}">`);
+      out.push(`<rect x="${x}" y="${y}" width="520" height="660" rx="22" fill="color-mix(in oklab, var(--c) 9%, var(--bg))" stroke="var(--c)" stroke-opacity=".45" stroke-width="2"/>`);
+      bar(x + 48, y + 56, 260 + rnd() * 120, 18, c, .9);
+      let yy = y + 116;
+      for (let p = 0; p < 4; p++) {
+        const lines = 2 + Math.floor(rnd() * 3);
+        for (let l = 0; l < lines; l++) { bar(x + 48, yy, l === lines - 1 ? 120 + rnd() * 200 : 380 + rnd() * 44, 9, t, .28); yy += 30; }
+        yy += 26;
+        if (yy > y + 600) break;
+      }
+      out.push('</g>');
+    };
+    page(1130 + rnd() * 20, 160, 8 + rnd() * 4, .45);
+    page(1000 + rnd() * 20, 120, -4 - rnd() * 4, 1);
+  },
+  // security: concentric rings of dots with gaps, a solid core
+  rings() {
+    const cx = 1180 + rnd() * 240, cy = 260 + rnd() * 380, step = 40 + rnd() * 26, hiA = 1 + Math.floor(rnd() * 3), hiB = hiA + 2 + Math.floor(rnd() * 4);
+    for (let r = 60 + rnd() * 30, k = 0; r < 700; r += step, k++) {
+      const n = Math.floor(r / (7 + rnd() * 4)), gapAt = rnd() * Math.PI * 2, gapLen = .3 + rnd() * 1.1, hi = k === hiA || k === hiB;
+      for (let i = 0; i < n; i++) {
+        const a = i / n * Math.PI * 2, d = Math.abs(((a - gapAt + Math.PI * 3) % (Math.PI * 2)) - Math.PI);
+        if (d < gapLen / 2) continue;
+        dot(cx + Math.cos(a) * r, cy + Math.sin(a) * r, hi ? 4.2 : 2.4 + rnd(), hi ? c : t, hi ? .9 : .12 + .3 * (1 - r / 640));
+      }
+    }
+    const core = 16 + rnd() * 16;
+    dot(cx, cy, core, c, .95); ring(cx, cy, core + 14, c, 3, .6);
+  },
+  // pipeline: lanes with stages, a flow that branches and joins
+  lanes() {
+    const lanes = 5, y0 = 210, gap = 120;
+    for (let l = 0; l < lanes; l++) {
+      const y = y0 + l * gap;
+      path(`M 980 ${y} L 1640 ${y}`, t, 2, .12, '2 14');
+      let x = 1020 + rnd() * 50;
+      while (x < 1580) {
+        const done = x < 1260 + rnd() * 200;
+        if (done) { dot(x, y, 13, c, .95); } else ring(x, y, 13, c, 3, .55);
+        x += 110 + rnd() * 120;
+      }
+    }
+    for (let k = 0; k < 3; k++) {
+      const a = Math.floor(rnd() * (lanes - 1)), x1 = 1040 + rnd() * 400, ya = y0 + a * gap, yb = ya + gap;
+      path(`M ${x1} ${ya} C ${x1 + 60} ${ya}, ${x1 + 40} ${yb}, ${x1 + 110} ${yb}`, c, 3, .6);
+    }
+  },
+  // tasks: a board with columns of cards, ticked ones filled
+  board() {
+    const cols = 3, x0 = 990, w = 180, gx = 200;
+    for (let i = 0; i < cols; i++) {
+      const x = x0 + i * gx;
+      bar(x, 120, 110 + rnd() * 60, 12, i === cols - 1 ? c : t, i === cols - 1 ? .85 : .35);
+      let y = 168;
+      const n = 3 + Math.floor(rnd() * 3);
+      for (let k = 0; k < n && y < 760; k++) {
+        const hgt = 92 + Math.floor(rnd() * 3) * 28, done = i === cols - 1 || (i === 1 && rnd() < .3);
+        box(x, y, w, hgt, done ? c : t, done ? .8 : .28, done ? 'color-mix(in oklab, var(--c) 14%, var(--bg))' : 'none');
+        if (done) { dot(x + 30, y + 32, 10, c, .95); } else ring(x + 30, y + 32, 10, t, 2, .45);
+        bar(x + 54, y + 26, 60 + rnd() * 60, 12, t, done ? .55 : .3);
+        if (hgt > 100) bar(x + 54, y + 54, 40 + rnd() * 70, 9, t, .18);
+        y += hgt + 20;
+      }
+    }
+  },
+  // getting started: Trinity's triangle as a swarm of dots
+  triangle() {
+    const cx = 1220 + rnd() * 80, cy = 440 + rnd() * 60, R = 220 + rnd() * 80, turn = (rnd() - .5) * .8;
+    const rot = ([x, y]) => [cx + (x - cx) * Math.cos(turn) - (y - cy) * Math.sin(turn), cy + (x - cx) * Math.sin(turn) + (y - cy) * Math.cos(turn)];
+    const A = rot([cx, cy - R * 1.04]), B = rot([cx - R * .9, cy + R * .52]), Cc = rot([cx + R * .9, cy + R * .52]);
+    const edge = (p, q, n) => { for (let i = 0; i < n; i++) { const u = i / n, j = 16 * (rnd() - .5); dot(p[0] + (q[0] - p[0]) * u + j, p[1] + (q[1] - p[1]) * u + 16 * (rnd() - .5), 2.6 + rnd() * 4.2, rnd() < .7 ? c : t, .45 + rnd() * .5); } };
+    edge(A, B, 46); edge(B, Cc, 46); edge(Cc, A, 46);
+    for (let i = 0; i < 90; i++) { const a = rnd() * Math.PI * 2, d = R * (1.15 + rnd() * .8); dot(cx + Math.cos(a) * d, cy + Math.sin(a) * d, 1.4 + rnd() * 2.2, t, .08 + rnd() * .2); }
+    for (const p of [A, B, Cc]) { dot(p[0], p[1], 12, c, .95); ring(p[0], p[1], 24, c, 2, .4); }
+  },
+};
+(motifs[C.motif] || motifs.triangle)();
+document.getElementById('m').innerHTML = out.join('');
+
+// the title fits in three lines: smaller steps until it does
+const el = document.getElementById('ttl');
+let size = 120;
+const fit = () => { el.style.fontSize = size + 'px'; return el.scrollHeight <= size * .98 * 3 + 4 && el.scrollWidth <= 740; };
+document.fonts.ready.then(() => { while (!fit() && size > 64) size -= 4; document.body.dataset.ready = '1'; });
+</script>
+</body>
+</html>
