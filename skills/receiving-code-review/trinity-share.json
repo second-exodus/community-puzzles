@@ -1,0 +1,10 @@
+{
+  "kind": "skills",
+  "name": "receiving-code-review",
+  "description": "Keeps your assistant honest when review feedback arrives: it checks every comment against the real code before changing anything, asks about unclear items first, pushes back with reasons when a suggestion is wrong and fixes one item at a time, with tests.",
+  "tags": ["code-review", "feedback", "pull-request", "yagni", "communication"],
+  "license": "MIT",
+  "runsWith": ["claude", "copilot", "codex", "gemini", "cursor"],
+  "for": ["dev"],
+  "category": "review"
+}

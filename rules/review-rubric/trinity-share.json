@@ -1,0 +1,10 @@
+{
+  "kind": "rules",
+  "name": "review-rubric",
+  "description": "A strict rubric for code review by an assistant: report only bugs the change introduced and that can be proven, one finding per issue, each tagged P0 to P3 with a confidence score, short matter-of-fact comments and a final correct/incorrect verdict. Optional JSON output.",
+  "tags": ["code-review", "rubric", "findings", "priority", "pull-request"],
+  "license": "Apache-2.0",
+  "runsWith": ["claude", "copilot", "codex", "gemini", "cursor"],
+  "for": ["dev"],
+  "category": "review"
+}

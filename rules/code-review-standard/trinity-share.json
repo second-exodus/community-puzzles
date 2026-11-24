@@ -1,0 +1,10 @@
+{
+  "kind": "rules",
+  "name": "code-review-standard",
+  "description": "A proven reviewer standard as one rule set: approve when a change clearly improves code health, check design, tests, complexity and every line, read the main part first, answer within a day, write kind comments that explain why, label nits and know what is a real emergency.",
+  "tags": ["code-review", "code-health", "reviewer", "pull-request", "team"],
+  "license": "CC-BY-3.0",
+  "runsWith": ["claude", "copilot", "codex", "gemini", "cursor"],
+  "for": ["dev"],
+  "category": "review"
+}

@@ -1,0 +1,10 @@
+{
+  "kind": "skills",
+  "name": "code-review-and-quality",
+  "description": "A complete review routine for any change: tests first (with a quick mutation check), then correctness, readability, architecture, security and performance, severity labels on every comment, concrete structural fixes, dependency checks and a clear approve or request-changes verdict.",
+  "tags": ["code-review", "quality", "pull-request", "refactoring", "dependencies"],
+  "license": "MIT",
+  "runsWith": ["claude", "copilot", "codex", "gemini", "cursor"],
+  "for": ["dev"],
+  "category": "review/style"
+}

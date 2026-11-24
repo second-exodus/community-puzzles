@@ -1,0 +1,10 @@
+{
+  "kind": "skills",
+  "name": "differential-security-review",
+  "description": "A security review for pull requests and diffs. It risk-scores each changed file, digs through git history for removed safeguards and re-introduced bugs, counts callers to size the blast radius, flags untested changes, models a concrete attacker for risky code and writes a full markdown report.",
+  "tags": ["security", "code-review", "git-history", "threat-modeling", "pull-request"],
+  "license": "CC-BY-SA-4.0",
+  "runsWith": ["claude", "copilot", "codex", "gemini", "cursor"],
+  "for": ["dev"],
+  "category": "review/security"
+}

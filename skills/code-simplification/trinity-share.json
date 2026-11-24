@@ -1,0 +1,10 @@
+{
+  "kind": "skills",
+  "name": "code-simplification",
+  "description": "Make working code easier to read without changing what it does: understand it first (Chesterton's Fence), spot concrete complexity signals, apply one tested simplification at a time, and avoid over-simplifying. Includes TypeScript, Python and React examples and a verification checklist.",
+  "tags": ["refactoring", "readability", "clean-code", "code-review", "simplify"],
+  "license": "MIT",
+  "runsWith": ["claude", "copilot", "codex", "gemini", "cursor"],
+  "for": ["dev"],
+  "category": "review/style"
+}

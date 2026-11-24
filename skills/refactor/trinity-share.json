@@ -1,0 +1,10 @@
+{
+  "kind": "skills",
+  "name": "refactor",
+  "description": "Refactor existing code in small tested steps without changing behaviour: name the purpose, pin behaviour with tests, fix ten common code smells, extract methods, add types, apply a strategy where it pays, and check the result against a refactoring checklist.",
+  "tags": ["refactoring", "code-smells", "clean-code", "maintainability", "design-patterns"],
+  "license": "MIT",
+  "runsWith": ["claude", "copilot", "codex", "gemini", "cursor"],
+  "for": ["dev"],
+  "category": "review/style"
+}
